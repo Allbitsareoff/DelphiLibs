@@ -10,7 +10,7 @@ implementation
 uses
   System.SysUtils,
   System.StrUtils,
-  ab.MemUtils,
+  ab.MemUtils
   ;
 
 var
