@@ -1,4 +1,4 @@
-{* Copyright (C) 2016
+﻿{* Copyright (C) 2016
     Ken Bourassa @ http://www.allbitsareoff.com - All Rights Reserved
  *}
 unit ab.Patch.System.SysUtils;
@@ -16,6 +16,21 @@ uses
 var
   uStringReplaceRedirect : TRedirectHandle;
 
+{
+  This won't work properly if rfIgnoreCase is used and OldPattern contains
+  lower case caracter that are encoded with more bytes when uppercased.Then again,
+  AnsiUpperCase doesn't seem to manage those properly.
+
+  I tried a few conversion from
+  ftp://ftp.unicode.org/Public/UCD/latest/ucd/SpecialCasing.txt
+  that indicates uppercase should be encoded on 4 bytes instead of 2, and
+  AnsiUpperCase failed to encode them properly.
+
+  Also, according to
+  http://stackoverflow.com/questions/20301347/is-uppercase-string-always-of-the-same-length-as-the-original-one
+  .Net doesn't seems to manage those properly either.
+
+}
 function abStringReplace(const S, OldPattern, NewPattern: string;
   Flags: TReplaceFlags): string;
 const
