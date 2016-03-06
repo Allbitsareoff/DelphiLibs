@@ -22,7 +22,7 @@ uses
 type
   TJumpData = packed record
     Jump: Byte;
-    Offset: NativeInt;
+    Offset: Integer;
   end;
 
   TRedirHandleData = packed record
@@ -47,7 +47,7 @@ begin
     begin
       hRedir.OriginalCodeAddr := OriginalCode;
       vJumpData.Jump := $E9;
-      vJumpData.Offset := PAnsiChar(NewCode) - PAnsiChar(OriginalCode) - SizeOf(hRedir.OriginalInstr);
+      vJumpData.Offset := NativeInt(NewCode) - NativeInt(OriginalCode) - SizeOf(hRedir.OriginalInstr);
       if not WriteProcessMemory(GetCurrentProcess, OriginalCode, @vJumpData, SizeOf(vJumpData), cbBuffer) then
       begin
         Dispose(hRedir);
